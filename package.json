@@ -1,0 +1,21 @@
+{
+  "name": "cardflow-proto",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "google-auth-library": "^10.6.2",
+    "google-spreadsheet": "^5.2.0",
+    "googleapis": "^171.4.0",
+    "openai": "^6.38.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "sharp": "^0.34.5"
+  }
+}

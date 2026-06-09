@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CardFlow Proto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
+  <link rel="stylesheet" href="styles.css?v=13" />
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name">CardFlow Proto</span>
+    </div>
+    <p class="brand-tagline">Business card OCR to spreadsheet</p>
+  </header>
+
+  <main class="app">
+    <section class="upload-stage">
+      <div class="stage-copy">
+        <p class="step-label">CardFlow Proto</p>
+        <h1>Turn cards into clean contact rows</h1>
+        <ol class="step-list">
+          <li>Upload or drop one or more card images</li>
+          <li>Review and edit extracted fields in the table</li>
+          <li>Copy to clipboard or send to Google Sheets</li>
+        </ol>
+      </div>
+
+      <div class="upload-card">
+        <div class="upload-card-header">
+          <span class="pill" id="statusText">Step 1 — Upload</span>
+        </div>
+
+        <label class="file-drop" for="cardInput">
+          <span class="file-drop-icon" aria-hidden="true"></span>
+          <span class="file-drop-title" id="fileLabelText">Add image</span>
+          <span class="file-drop-hint">PNG, JPG, or WEBP — select or drag multiple files</span>
+          <input id="cardInput" type="file" accept="image/*" multiple />
+        </label>
+
+        <div id="cardQueue" class="card-queue hidden" aria-label="Uploaded cards"></div>
+
+        <div id="previewContainer" class="preview-panel hidden">
+          <img id="cardPreview" alt="Uploaded card preview" />
+          <p id="fileName" class="file-name"></p>
+        </div>
+
+        <div id="extractionStatus" class="extraction-banner hidden">Orienting and analyzing card...</div>
+      </div>
+    </section>
+
+    <section class="sheet-stage panel" id="googleSheetsSection" aria-label="Google Sheets export">
+      <div class="sheet-panel">
+        <div class="panel-head compact">
+          <h2>Google Sheets</h2>
+          <p>Sign in with Google, paste your spreadsheet URL, then export contacts from the output table.</p>
+        </div>
+        <div class="sheet-actions">
+          <a id="signInButton" class="btn btn-primary" href="/auth/google">Login with Google</a>
+          <button id="signOutButton" class="btn btn-ghost hidden" type="button">Sign out</button>
+          <label class="field field-wide">
+            <span>Spreadsheet ID or URL</span>
+            <input id="spreadsheetIdInput" type="text" placeholder="https://docs.google.com/spreadsheets/d/..." />
+          </label>
+        </div>
+        <p id="sheetStatus" class="status-line">Checking Google sign-in...</p>
+      </div>
+    </section>
+
+    <section class="review-stage hidden" id="reviewSection">
+      <div class="output-panel panel">
+        <div class="panel-head output-panel-head">
+          <div>
+            <h2>Output</h2>
+            <p>Edit any cell directly, like a spreadsheet. Click a row to preview that card in the upload panel.</p>
+          </div>
+          <div class="output-actions">
+            <button id="refreshCardButton" class="btn btn-ghost" type="button">Re-analyze card</button>
+            <button id="copyButton" class="btn btn-primary" type="button">Copy table to clipboard</button>
+            <button id="exportToSheetsButton" class="btn btn-secondary hidden" type="button">Export to Sheets</button>
+          </div>
+        </div>
+
+        <div class="data-table-wrap hidden" id="dataTableContainer">
+          <div class="table-scroll">
+            <table class="data-table" id="dataTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th>Company</th>
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody id="dataTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p id="feedback" class="toast" role="status"></p>
+  </main>
+
+  <footer class="site-footer">
+    <p>CardFlow Proto — local OCR, your data stays in the browser until you export.</p>
+  </footer>
+
+  <script src="lib/formatSheetValue.js?v=3"></script>
+  <script src="client.js?v=16"></script>
+</body>
+</html>

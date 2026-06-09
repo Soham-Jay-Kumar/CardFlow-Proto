@@ -1,0 +1,11 @@
+# Sensitive credentials
+.env
+credentials.json
+credentials.JSON.js
+
+# Dependencies
+node_modules/
+
+# Local logs or system files
+.DS_Store
+npm-debug.log*
